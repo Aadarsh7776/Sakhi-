@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/custom_textfield.dart';
 import 'register_screen.dart';
-import 'home_page.dart'; // <-- Import your map page
+import 'home_page.dart'; // <-- Your map/home page
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   LoginScreen({super.key});
-
-  // Fake credentials for testing
-  final String fakeEmail = "test@sakhi.com";
-  final String fakePassword = "12345";
 
   @override
   Widget build(BuildContext context) {
@@ -44,23 +41,36 @@ class LoginScreen extends StatelessWidget {
                   backgroundColor: Colors.pinkAccent,
                   minimumSize: const Size(double.infinity, 50),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   String email = emailController.text.trim();
                   String password = passwordController.text.trim();
 
-                  if (email == fakeEmail && password == fakePassword) {
-                    // ✅ Correct credentials → Go to HomePage
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please enter email and password")),
+                    );
+                    return;
+                  }
+
+                  try {
+                    // Firebase sign in
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+
+                    // ✅ Login successful → Go to HomePage
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (_) => HomePage()),
                     );
-                  } else {
-                    // ❌ Invalid credentials → Show error dialog
+                  } catch (e) {
+                    // ❌ Login failed → Show error
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text("Login Failed"),
-                        content: const Text("Invalid email or password."),
+                        content: Text(e.toString()),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),

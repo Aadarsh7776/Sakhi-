@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "321014748703",
+    "project_id": "sakhi-37fc8",
+    "storage_bucket": "sakhi-37fc8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321014748703:android:0cca6ab81093159fa6a72a",
+        "android_client_info": {
+          "package_name": "com.company.sakhi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvvWExGZ4B7wqQ-gqed0P1uWbDZQLlyOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
