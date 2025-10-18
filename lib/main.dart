@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'screens/home_page.dart'; // <-- Add this import for the Sakhi map page
 
 void main() {
-  runApp(SakhiApp());
+  runApp(const SakhiApp());
 }
 
 class SakhiApp extends StatelessWidget {
@@ -17,7 +18,11 @@ class SakhiApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pinkAccent),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => const HomePage(), // <-- Map page route
+      },
     );
   }
 }
