@@ -10,9 +10,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0; // For tracking selected button
+  int _selectedIndex = 0;
 
-  // 🗺️ Your map polygons
   final dangerZone = Polygon(
     points: [
       LatLng(19.0800, 72.8700),
@@ -39,14 +38,37 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sakhi"),
         backgroundColor: Colors.pinkAccent,
+        elevation: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              './assets/sakhi_logo.jpg', // 🩷 Replace with your 3rd uploaded image file
+              height: 35,
+            ),
+            const SizedBox(width: 10),
+            const Text(
+              "Sakhi",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 1,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false, // ❌ Removes the back arrow
         actions: [
-          IconButton(icon: const Icon(Icons.notifications), onPressed: () {}),
+          IconButton(
+            icon: const Icon(Icons.notifications_none, color: Colors.white),
+            onPressed: () {},
+          ),
         ],
       ),
 
-      // 🌍 MAP BODY
+      // 🌍 Map Section
       body: FlutterMap(
         options: const MapOptions(
           initialCenter: LatLng(19.0760, 72.8777),
@@ -61,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
 
-      // ⚡ Sleek Bottom Navigation Bar
+      // ⚡ Bottom Navigation Bar
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -81,46 +103,43 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              // 🗺️ MAP Button
+              // 🗺 Home Button
               IconButton(
                 icon: Icon(
-                  Icons.map,
+                  Icons.map_rounded,
                   color: _selectedIndex == 0 ? Colors.pinkAccent : Colors.grey,
                 ),
-                onPressed: () {
-                  setState(() => _selectedIndex = 0);
-                  // Navigate or reload map if needed
-                },
+                onPressed: () => setState(() => _selectedIndex = 0),
               ),
 
-              // 🚨 SOS Button (center floating)
-              const SizedBox(width: 40), // Space for FAB
-              // 👤 PROFILE Button
+              const SizedBox(width: 40), // Space for SOS button
+              // 👤 Profile Button
               IconButton(
                 icon: Icon(
-                  Icons.person,
+                  Icons.person_outline,
                   color: _selectedIndex == 2 ? Colors.pinkAccent : Colors.grey,
                 ),
-                onPressed: () {
-                  setState(() => _selectedIndex = 2);
-                  Navigator.pushNamed(context, '/profile');
-                },
+                onPressed: () => setState(() => _selectedIndex = 2),
               ),
             ],
           ),
         ),
       ),
 
-      // 🚨 Floating Action Button (SOS)
+      // 🚨 Floating SOS Button
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pinkAccent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-        child: const Icon(Icons.emergency, color: Colors.white, size: 30),
+        backgroundColor: Colors.white,
+        elevation: 6,
+        shape: const CircleBorder(),
         onPressed: () {
           setState(() => _selectedIndex = 1);
           Navigator.pushNamed(context, '/sos');
         },
+        child: Image.asset(
+          './assets/sos_icon.png', // ⚠ Replace with your 2nd uploaded SOS image file
+          height: 40,
+        ),
       ),
     );
   }
