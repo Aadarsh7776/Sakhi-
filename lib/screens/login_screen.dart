@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../widgets/custom_textfield.dart';
 import 'register_screen.dart';
-import 'home_page.dart'; // <-- Your map/home page
+import 'home_page.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -13,18 +13,42 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFF4081), // 💖 Same pink shade as your image
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 50),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // 🌸 Sakhi Logo
+              Image.asset(
+                'assets/sakhi_logo.png', // <-- Add your logo to assets
+                height: 90,
+              ),
+              const SizedBox(height: 10),
+
+              // Tagline
+              const Text(
+                "Sisterhood. Safety. Support.",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              const SizedBox(height: 25),
+
               const Text(
                 'Welcome to Sakhi 💕',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 30),
 
+              // Email & Password Fields
               CustomTextField(
                 hintText: 'Email',
                 controller: emailController,
@@ -34,12 +58,17 @@ class LoginScreen extends StatelessWidget {
                 obscureText: true,
                 controller: passwordController,
               ),
-
               const SizedBox(height: 20),
+
+              // Login Button
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pinkAccent,
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.pinkAccent,
                   minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 onPressed: () async {
                   String email = emailController.text.trim();
@@ -53,19 +82,15 @@ class LoginScreen extends StatelessWidget {
                   }
 
                   try {
-                    // Firebase sign in
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: email,
                       password: password,
                     );
-
-                    // ✅ Login successful → Go to HomePage
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => HomePage()),
+                      MaterialPageRoute(builder: (_) => const HomePage()),
                     );
                   } catch (e) {
-                    // ❌ Login failed → Show error
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -85,10 +110,15 @@ class LoginScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 20),
+
+              // Register Option
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don't have an account? "),
+                  const Text(
+                    "Don't have an account? ",
+                    style: TextStyle(color: Colors.white),
+                  ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -99,10 +129,36 @@ class LoginScreen extends StatelessWidget {
                     child: const Text(
                       "Register",
                       style: TextStyle(
-                        color: Colors.pinkAccent,
+                        color: Colors.yellowAccent,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // Social Media Icons Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: Image.asset('assets/google.png'),
+                    iconSize: 40,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: Image.asset('assets/facebook.jpg'),
+                    iconSize: 40,
+                    onPressed: () {},
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    icon: Image.asset('assets/apple.jpg'),
+                    iconSize: 40,
+                    onPressed: () {},
                   ),
                 ],
               ),
