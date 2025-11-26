@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'screens/login_screen.dart';
+import 'screens/home_page.dart';
+import 'screens/sos_page.dart';
+import 'screens/profile_page.dart';
 
-void main() {
-  runApp(SakhiApp());
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  runApp(const SakhiApp());
 }
 
 class SakhiApp extends StatelessWidget {
@@ -17,7 +27,14 @@ class SakhiApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pinkAccent),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
-    );
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => const HomePage(),
+        '/sos': (context) => const SosScreen(),
+        '/profile': (context) => const ProfilePage(),
+
+      },
+    );  
   }
 }
